@@ -21,5 +21,20 @@ class Controller extends BaseController
         $randomQuote = Controller::$quotes[$randomNumber];
         return response()->json(['quote' => $randomQuote, 'server_ip' => gethostbyname(gethostname())]);
     }
-    
+
+    public function random_images() {
+        // por algún motivo no me permite poner estas dos variables public static
+        $totalImages = 15;
+        $imageFormat = 'https://agustin-basurero.s3.amazonaws.com/images/%d.jpg';
+
+        $randomNumber = rand(1, $totalImages);
+        $randomImage = sprintf($imageFormat, $randomNumber);
+
+        $data = [
+            'image' => $randomImage,
+            'server_ip' => gethostbyname(gethostname()),
+        ];
+
+        return view('random_image')->with('data', $data);
+    }
 }
