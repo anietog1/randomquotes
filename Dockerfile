@@ -1,7 +1,6 @@
 FROM php:7.2-apache-stretch
 RUN apt-get update -y && apt-get install -y openssl zip unzip git 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN chmod -R 777 storage
 COPY . /var/www/html
 WORKDIR /var/www/html
 RUN composer install \
@@ -10,6 +9,6 @@ RUN composer install \
     --no-plugins \
     --no-scripts \
     --prefer-dist
-
+RUN chmod -R 777 storage
 RUN a2enmod rewrite
 RUN service apache2 restart
